@@ -132,6 +132,7 @@ export const listOrders = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_MINE_LIST_FAIL, payload: message });
   }
 };
+
 export const deleteOrder = (orderId) => async (dispatch, getState) => {
   dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
   const {
