@@ -5,7 +5,7 @@ import {
   CART_SAVE_PAYMENT_METHOD,
   CART_SAVE_SHIPPING_ADDRESS,
 } from "../constants/cartConstants";
-//aadas
+
 export const addToCart = (productId, qty) => async (dispatch, getState) => {
   const { data } = await Axios.get(`/api/products/${productId}`);
   dispatch({
