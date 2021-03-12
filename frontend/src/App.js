@@ -46,9 +46,6 @@ function App() {
           </div>
 
           <div>
-            <a href="http://www.jowett.com" target="_blank" rel="noreferrer">
-              <i className="fa fa-child" aria-hidden="true"></i> Our Partners
-            </a>
             <Link to="/contactus">
               <i className="fa fa-comments" aria-hidden="true"></i> Contact Us
             </Link>
