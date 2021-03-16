@@ -46,9 +46,9 @@ function App() {
           </div>
 
           <div>
-            <Link to="/contactus">
+            {/* <Link to="/contactus">
               <i className="fa fa-comments" aria-hidden="true"></i> Contact Us
-            </Link>
+            </Link> */}
 
             <Link to="/cart">
               <i className="fa fa-shopping-cart" aria-hidden="true"></i> Cart
