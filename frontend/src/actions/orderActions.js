@@ -21,6 +21,7 @@ import {
   ORDER_DELIVER_SUCCESS,
   ORDER_DELIVER_FAIL,
   ORDER_DELIVER_REQUEST,
+  ORDER_LIST_FAIL,
 } from "../constants/orderConstants";
 
 export const createOrder = (order) => async (dispatch, getState) => {
@@ -118,18 +119,17 @@ export const listOrders = () => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.get("/api/orders/", {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
+    const { data } = await Axios.get("/api/orders", {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
     });
+    console.log(data);
     dispatch({ type: ORDER_LIST_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message
         ? error.response.data.message
         : error.message;
-    dispatch({ type: ORDER_MINE_LIST_FAIL, payload: message });
+    dispatch({ type: ORDER_LIST_FAIL, payload: message });
   }
 };
 
