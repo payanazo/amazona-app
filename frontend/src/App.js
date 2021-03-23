@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import { signout } from "./actions/userActions";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import SellerRoute from "./components/SellerRoute";
 import CartScreen from "./Screens/CartScreen";
 import HomeScreen from "./Screens/HomeScreen";
 import OrderHistoryScreen from "./Screens/OrderHistoryScreen";
@@ -18,6 +19,7 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
 import ShippingAddressScreen from "./Screens/ShippingAddressScreen";
 import SigninScreen from "./Screens/SigninScreen";
+import UserEditScreen from "./Screens/UserEditScreen";
 import UserListScreen from "./Screens/UserListScreen";
 
 function App() {
@@ -74,7 +76,7 @@ function App() {
                     <Link to="/orderhistory">Order History</Link>
                   </li>
 
-                  {userInfo.isAdmin === true && (
+                  {userInfo && userInfo.isAdmin === true && (
                     <ul>
                       <li>
                         <i className="fa fa-tachometer" aria-hidden="true"></i>
@@ -97,6 +99,21 @@ function App() {
                       </li>{" "}
                     </ul>
                   )}
+                  {userInfo && userInfo.isSeller === true && (
+                    <ul>
+                      <li>
+                        <i
+                          className="fa fa-shopping-bag"
+                          aria-hidden="true"
+                        ></i>
+                        <Link to="/productlist/seller">My Products</Link>
+                      </li>
+                      <li>
+                        <i className="fa fa-archive" aria-hidden="true"></i>
+                        <Link to="/orderlist/seller">My Sales Orders</Link>
+                      </li>
+                    </ul>
+                  )}
                   <ul>
                     <li>
                       <i className="fa fa-sign-out" aria-hidden="true"></i>
@@ -112,33 +129,6 @@ function App() {
                 <i class="fa fa-sign-in" aria-hidden="true"></i> Sign In
               </Link>
             )}
-            {/* efwefwefgEQGEQGeagEG
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  <i class="fa fa-cog" aria-hidden="true"></i> Admin{" "}
-                  <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <i class="fa fa-tachometer" aria-hidden="true"></i>
-                    <Link to="/dashboard">Dashborad</Link>
-                  </li>
-                  <li>
-                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                    <Link to="/productlist">Products</Link>
-                  </li>
-                  <li>
-                    <i class="fa fa-archive" aria-hidden="true"></i>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
-                  <li>
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )} */}
           </div>
         </header>
         <main>
@@ -163,14 +153,31 @@ function App() {
           <AdminRoute
             path="/productlist"
             component={ProductListScreen}
+            exact
           ></AdminRoute>
 
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+          <AdminRoute
+            path="/user/:id/edit"
+            component={UserEditScreen}
+          ></AdminRoute>
 
           <AdminRoute
             path="/orderlist"
             component={OrderListScreen}
+            exact
           ></AdminRoute>
+
+          <SellerRoute
+            path="/productlist/seller"
+            component={ProductListScreen}
+          ></SellerRoute>
+
+          <SellerRoute
+            path="/orderlist/seller"
+            component={OrderListScreen}
+          ></SellerRoute>
+
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">
