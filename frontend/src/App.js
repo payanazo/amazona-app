@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import { signout } from "./actions/userActions";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import SearchBox from "./components/SearchBox";
 import SellerRoute from "./components/SellerRoute";
 import CartScreen from "./Screens/CartScreen";
 import HomeScreen from "./Screens/HomeScreen";
@@ -17,6 +18,7 @@ import ProductListScreen from "./Screens/ProductListScreen";
 import ProductScreen from "./Screens/ProductScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
+import SearchScreen from "./Screens/SearchScreen";
 import SellerScreen from "./Screens/SellerScreen";
 import ShippingAddressScreen from "./Screens/ShippingAddressScreen";
 import SigninScreen from "./Screens/SigninScreen";
@@ -48,7 +50,13 @@ function App() {
               Jowett Inc.
             </Link>
           </div>
-
+          <div>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
+          </div>
           <div>
             {/* <Link to="/contactus">
               <i className="fa fa-comments" aria-hidden="true"></i> Contact Us
@@ -148,6 +156,11 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route
+            path="/search/name/:name?"
+            component={SearchScreen}
+            exact
+          ></Route>
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}

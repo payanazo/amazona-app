@@ -44,7 +44,6 @@ export default function PaymentMethodScreen(props) {
                 (document.getElementById("paypal").checked = true)
               }
             ></i>{" "}
-            {/* <label htmlFor="paypal"> PayPal, credit card</label> */}
           </div>
         </div>
         <div>
@@ -58,7 +57,7 @@ export default function PaymentMethodScreen(props) {
               required
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></input>
-            {/* <label htmlFor="stripe">Stripe</label> */}
+
             <i
               className="fa fa-cc-stripe fa-5x pay-icon"
               aria-hidden="true"
