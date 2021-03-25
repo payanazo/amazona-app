@@ -17,6 +17,7 @@ import ProductListScreen from "./Screens/ProductListScreen";
 import ProductScreen from "./Screens/ProductScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import RegisterScreen from "./Screens/RegisterScreen";
+import SellerScreen from "./Screens/SellerScreen";
 import ShippingAddressScreen from "./Screens/ShippingAddressScreen";
 import SigninScreen from "./Screens/SigninScreen";
 import UserEditScreen from "./Screens/UserEditScreen";
@@ -132,6 +133,7 @@ function App() {
           </div>
         </header>
         <main>
+          <Route path="/seller/:id?" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen} exact></Route>
           <Route

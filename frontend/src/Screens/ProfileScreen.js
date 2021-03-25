@@ -41,6 +41,7 @@ export default function ProfileScreen() {
       }
     }
   }, [dispatch, userInfo._id, user]);
+
   const submitHandler = (e) => {
     e.preventDefault();
     // dispatch update profile
@@ -131,7 +132,7 @@ export default function ProfileScreen() {
                     type="text"
                     placeholder="Enter Seller Name"
                     value={sellerName}
-                    onchange={(e) => setSellerName(e.target.value)}
+                    onChange={(e) => setSellerName(e.target.value)}
                   ></input>
                 </div>
                 <div>
@@ -141,7 +142,7 @@ export default function ProfileScreen() {
                     type="text"
                     placeholder="Enter Seller Logo"
                     value={sellerLogo}
-                    onchange={(e) => setSellerLogo(e.target.value)}
+                    onChange={(e) => setSellerLogo(e.target.value)}
                   ></input>
                 </div>
                 <div>
@@ -151,7 +152,7 @@ export default function ProfileScreen() {
                     type="text"
                     placeholder="Enter Description"
                     value={sellerDescription}
-                    onchange={(e) => setSellerDescription(e.target.value)}
+                    onChange={(e) => setSellerDescription(e.target.value)}
                   ></input>
                 </div>
               </>

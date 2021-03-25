@@ -8,6 +8,16 @@ import { generateToken, isAdmin, isAuth } from "../utils.js";
 const userRouter = express.Router();
 
 userRouter.get(
+  "/top-sellers",
+  expressAsyncHandler(async (req, res) => {
+    const topSellers = await User.find({ isSeller: true })
+      .sort({ "seller.rating": -1 })
+      .limit(3);
+    res.send(topSellers);
+  })
+);
+
+userRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     await User.remove({});
@@ -78,7 +88,7 @@ userRouter.put(
       user.email = req.body.email || user.email;
       if (user.isSeller) {
         user.seller.name = req.body.sellerName || user.seller.name;
-        user.seller.Logo = req.body.sellerLogo || user.seller.Logo;
+        user.seller.logo = req.body.sellerLogo || user.seller.Logo;
         user.seller.description =
           req.body.sellerDescription || user.seller.description;
       }
