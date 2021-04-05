@@ -24,7 +24,7 @@ import ShippingAddressScreen from "./Screens/ShippingAddressScreen";
 import SigninScreen from "./Screens/SigninScreen";
 import UserEditScreen from "./Screens/UserEditScreen";
 import UserListScreen from "./Screens/UserListScreen";
-import listProductCategories from "./actions/productActions";
+import { listProductCategories } from "./actions/productActions";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -161,6 +161,16 @@ function App() {
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
           <Route
             path="/search/name/:name?"
+            component={SearchScreen}
+            exact
+          ></Route>
+          <Route
+            path="/search/category/:category"
+            component={SearchScreen}
+            exact
+          ></Route>
+          <Route
+            path="/search/category/:category/name/:name"
             component={SearchScreen}
             exact
           ></Route>
