@@ -71,7 +71,7 @@ function App() {
               Jowett Inc.
             </Link>
           </div>
-          <div>
+          <div className="search">
             <Route
               render={({ history }) => (
                 <SearchBox history={history}></SearchBox>
@@ -223,7 +223,7 @@ function App() {
             exact
           ></Route>
           <Route
-            path="/search/category/:category/name/:name/min/:min/max/:max"
+            path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order"
             component={SearchScreen}
             exact
           ></Route>

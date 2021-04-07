@@ -6,11 +6,18 @@ import { listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import Product from "../components/Product";
-import { productCategoryListReducer } from "../reducers/productReducers";
-import { prices } from "../utils";
+import Rating from "../components/Rating";
+import { prices, ratings } from "../utils";
 
 export default function SearchScreen(props) {
-  const { name = "all", category = "all", min = 0, max = 0 } = useParams();
+  const {
+    name = "all",
+    category = "all",
+    min = 0,
+    max = 0,
+    rating = 0,
+    order = "newest",
+  } = useParams();
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
@@ -29,16 +36,24 @@ export default function SearchScreen(props) {
         category: category !== "all" ? category : "",
         min,
         max,
+        rating,
+        order,
       })
     );
-  }, [dispatch, name, category, min, max]);
+  }, [dispatch, name, category, min, max, rating, order]);
 
   const getFilterUrl = (filter) => {
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
+    const sortOrder = filter.order || order;
+    const filterRating = filter.rating
+      ? filter.rating
+      : filter.rating === 0
+      ? 0
+      : rating;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}`;
+    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`;
   };
 
   return (
@@ -49,9 +64,37 @@ export default function SearchScreen(props) {
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <div>{products.length} Results</div>
+          <div>
+            <MessageBox>{products.length} Results</MessageBox>
+            <Link
+              to={getFilterUrl({
+                min: 0,
+                max: 0,
+                name: "all",
+                category: "all",
+                rating: 0,
+              })}
+            >
+              Remove Filters
+            </Link>
+          </div>
         )}
+        <div>
+          Sort by{" "}
+          <select
+            value={order}
+            onChange={(e) => {
+              props.history.push(getFilterUrl({ order: e.target.value }));
+            }}
+          >
+            <option value="newest">Newest: Arrivals</option>
+            <option value="lowest">Price: Low to High</option>
+            <option value="highest">Price: High to Low</option>
+            <option value="toprated">Avg. Customer Reviewes</option>
+          </select>
+        </div>
       </div>
+
       <div className="row top">
         <div className="col-1">
           <h3>Departments</h3>
@@ -62,6 +105,14 @@ export default function SearchScreen(props) {
               <MessageBox variant="danger">{errorCategories}</MessageBox>
             ) : (
               <ul>
+                <li>
+                  <Link
+                    className={"all" === category ? "active" : ""}
+                    to={getFilterUrl({ category: "all" })}
+                  >
+                    Any
+                  </Link>
+                </li>
                 {categories.map((c) => (
                   <li key={c}>
                     <Link
@@ -92,6 +143,21 @@ export default function SearchScreen(props) {
               ))}
             </ul>
           </div>
+          <div>
+            <h3>Avg. Customer Reviewe</h3>
+            <ul>
+              {ratings.map((r) => (
+                <li key={r.name}>
+                  <Link
+                    to={getFilterUrl({ rating: r.rating })}
+                    className={`${r.rating}` === `${rating}` ? "active" : ""}
+                  >
+                    <Rating caption={" & up"} rating={r.rating}></Rating>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="col-3">
@@ -100,11 +166,16 @@ export default function SearchScreen(props) {
           ) : error ? (
             <MessageBox variant="danger">{error}</MessageBox>
           ) : (
-            <div className="row center">
-              {products.map((product) => (
-                <Product key={product._id} product={product}></Product>
-              ))}
-            </div>
+            <>
+              {products.length === 0 && (
+                <MessageBox>No Product Found</MessageBox>
+              )}
+              <div className="row center">
+                {products.map((product) => (
+                  <Product key={product._id} product={product}></Product>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>
