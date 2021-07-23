@@ -27,6 +27,7 @@ import UserListScreen from "./Screens/UserListScreen";
 import { listProductCategories } from "./actions/productActions";
 import MessageBox from "./components/MessageBox";
 import LoadingBox from "./components/LoadingBox";
+import MapScreen from "./Screens/MapScreen";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -230,6 +231,10 @@ function App() {
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}
+          ></PrivateRoute>
+                    <PrivateRoute
+            path="/map"
+            component={MapScreen}
           ></PrivateRoute>
           <AdminRoute
             path="/productlist"

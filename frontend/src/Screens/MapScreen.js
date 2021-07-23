@@ -13,6 +13,9 @@ import { useDispatch } from "react-redux";
 const libs = ["places"];
 const defaultLocation = { lat: 27.29, lng: -109.56 };
 
+var myLat=27.29;
+var myLng=-109.56;
+
 export default function MapScreen(props) {
 
   const [googleApiKey, setGoogleApiKey] = useState("");
@@ -30,6 +33,7 @@ export default function MapScreen(props) {
       getUserCurrentLocation();
     };
     fetch();
+
   }, []);
 
   const onLoad = (map) => {
@@ -48,18 +52,32 @@ export default function MapScreen(props) {
     });
   };
 
+
+
   const onPlacesChanged =()=>{
     if (placeRef.current.getPlaces()[0]){
     const place=placeRef.current.getPlaces()[0].geometry.location;
     setCenter({lat: place.lat(), lng: place.lng()});
-    setLocation({lat: place.lat(), lng: place.lng()});}
+    setLocation({lat: place.lat(), lng: place.lng()});
+    myLat=place.lat();
+    myLng=place.lng();
   }
+  }
+  const onMarkerChanged =()=>{
+    if (placeRef.current.getPlaces()[0]){
+    const place=placeRef.current.getPlaces()[0].geometry.location;
+    setCenter({lat: place.lat(), lng: place.lng()});
+    setLocation({lat: place.lat(), lng: place.lng()});
+    myLat=place.lat();
+    myLng=place.lng();
+  }
+  }
+
   const dispatch= useDispatch();
   const onConfirm= ()=> {
 
     const places = placeRef.current.getPlaces();
     if (places && places.length===1) {
-        
         
         dispatch({
             type:   USER_ADDRESS_MAP_CONFIRM,
@@ -95,8 +113,13 @@ export default function MapScreen(props) {
             setLocation({
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
+                
               });
-        });
+
+        }
+
+        );
+        
     }
 
   };
@@ -123,12 +146,16 @@ export default function MapScreen(props) {
                 className="primary"
                 onClick={onConfirm}
               ></button>
+              <label>Lat:{myLat}</label>
+              <label>Lng:{myLng}</label>
             </div>
           </StandaloneSearchBox>
-          <Marker position={location} onLoad={onMarkerLoad}></Marker>
+          <Marker position={location} onLoad={onMarkerLoad} ></Marker>
         </GoogleMap>
       </LoadScript>
+
     </div>
+
   ) : (
     <LoadingBox></LoadingBox>
   );
