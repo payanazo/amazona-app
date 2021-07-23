@@ -150,7 +150,7 @@ export default function MapScreen(props) {
               <label>Lng:{myLng}</label>
             </div>
           </StandaloneSearchBox>
-          <Marker position={location} onLoad={onMarkerLoad} ></Marker>
+          <Marker position={location} onLoad={onMarkerChanged} ></Marker>
         </GoogleMap>
       </LoadScript>
 
