@@ -63,15 +63,7 @@ export default function MapScreen(props) {
     myLng=place.lng();
   }
   }
-  const onMarkerChanged =()=>{
-    if (placeRef.current.getPlaces()[0]){
-    const place=placeRef.current.getPlaces()[0].geometry.location;
-    setCenter({lat: place.lat(), lng: place.lng()});
-    setLocation({lat: place.lat(), lng: place.lng()});
-    myLat=place.lat();
-    myLng=place.lng();
-  }
-  }
+
 
   const dispatch= useDispatch();
   const onConfirm= ()=> {
@@ -115,13 +107,9 @@ export default function MapScreen(props) {
                 lng: position.coords.longitude,
                 
               });
-
         }
-
         );
-        
     }
-
   };
 
   return googleApiKey ? (
@@ -145,12 +133,11 @@ export default function MapScreen(props) {
                 type="button"
                 className="primary"
                 onClick={onConfirm}
-              ></button>
-              <label>Lat:{myLat}</label>
-              <label>Lng:{myLng}</label>
+              >Confirm</button>
+ 
             </div>
           </StandaloneSearchBox>
-          <Marker position={location} onLoad={onMarkerChanged} ></Marker>
+          <Marker position={location}  ></Marker>
         </GoogleMap>
       </LoadScript>
 

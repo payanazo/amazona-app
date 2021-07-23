@@ -479,16 +479,18 @@ img.medium-product {
   left:0;
   right: 0;
   margin: 0.5rem auto;
-  width: 25rem;
-  height: 4rem;
+  width: 65rem;
+  height: 4.5rem;
   display: flex;
 }
 .map-input-box input{
 border-radius: 1rem 0 0 1rem ;
 border-right: 0;
+width: 55rem;
 }
 
 .map-input-box button {
   border-radius: 0 1rem 1rem 0;
   border-left: 0;
+  width: 10rem;
 }
